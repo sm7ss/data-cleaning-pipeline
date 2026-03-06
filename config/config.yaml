@@ -1,6 +1,6 @@
 Paths: 
-  input_file: #Here your file
-  output_file: #Here the output name of the created file
+  input_file: 'data/games.csv'
+  output_file: 'output.parquet'
 
 Cleaning_Rules: 
   column_rename: {'Name':'name', 'Platform':'platform', 'Year_of_Release':'year_of_release', 'Genre':'genre' , 'NA_sales':'na_sales' , 'EU_sales':'eu_sales' , 'JP_sales':'jp_sales' , 'Other_sales':'other_sales' , 'Critic_Score':'critic_score' , 'User_Score':'user_score' , 'Rating':'rating'}
