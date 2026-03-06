@@ -68,7 +68,6 @@ venv.bak/
 Thumbs.db
 
 # Data files
-*.csv
 *.parquet
 *.json
 *.pkl
