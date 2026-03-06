@@ -2,7 +2,7 @@ from pathlib import Path
 import polars as pl
 from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import Dict, List, Optional, Union
-from strategies.Strategies import StrategyFE, StrategyTest, StrategyDataType, StrategyNullCatImputer, StrategyNullNumImput
+from ..strategies.Strategies import StrategyFE, StrategyTest, StrategyDataType, StrategyNullCatImputer, StrategyNullNumImput
 
 class PathConfigValidator(BaseModel): 
     input_file: str
@@ -12,7 +12,11 @@ class PathConfigValidator(BaseModel):
     def archivo_existente(cls, v): 
         path = Path(v)
         if not path.exists(): 
-            raise FileNotFoundError(f'El archivo {path.name} no existe')
+            path= Path(__file__).resolve().parent.parent.parent / 'data' / v
+            if not path.exists(): 
+                raise FileNotFoundError(f'El archivo {path.name} no existe')
+            else: 
+                return path
         return path
     
     @field_validator('output_file')
