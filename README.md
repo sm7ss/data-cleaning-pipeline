@@ -6,119 +6,119 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-yellow.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Un sistema completo y automatizado para limpieza de datos que integra análisis exploratorio, gestión inteligente de memoria y pipelines robustos de preprocesamiento con validación de datos.
+A comprehensive, automated data cleansing system that integrates exploratory analysis, intelligent memory management, and robust preprocessing pipelines with data validation.
 
-## 📚 Sistema Profesional de Limpieza de Datos
+## 📚 Professional Data Cleaning System
 
-Este repositorio contiene un pipeline de limpieza de datos diseñado para manejar datasets grandes con eficiencia, validación robusta y procesamiento optimizado.
+This repository contains a data cleaning pipeline designed to handle large datasets with efficiency, robust validation, and optimized processing.
 
-## 🏗️ Estructura del Repositorio
+## 🏗️ Repository Structure
 
-### 🔍 **01 - Análisis Exploratorio**
+### 🔍 **01 - Exploratory Analysis**
 
-| Módulo       | Tecnologías     | Funcionalidades                                                         |
-|--------------|-----------------|-------------------------------------------------------------------------|
-| **`EDA.py`** | Polars, Logging | Análisis automático, estadísticas, detección de nulos, vista preliminar |
+| Module       | Technologies     | Functionalities        |
+|--------------|-----------------|------------------------------------------------|
+| **EDA.py** | Polars, Logging | Automatic analysis, statistics, null detection, preview |
 
-### 💾 **02 - Gestión de Memoria Inteligente**  
+### 💾 **02 - Intelligent Memory Management**  
 
-| Módulo            | Tecnologías              | Funcionalidades                                         |
-|-------------------|--------------------------|---------------------------------------------------------|
-| **`GetFrame.py`** | Polars, Psutil, Pydantic | Decisión automática Eager/Lazy, optimización de memoria |
+| Module            | Technologies              | Features                                         |
+|-------------------|--------------------------|----------------------------------- |
+| **GetFrame.py** | Polars, Psutil, Pydantic | Automatic Eager/Lazy decision, memory optimization |
 
-### 🚀 **03 - Pipeline de Limpieza**
+### 🚀 **03 - Cleaning Pipeline**
 
-| Módulo                     | Tecnologías               | Funcionalidades                                             |
-|----------------------------|---------------------------|-------------------------------------------------------------|
-| **`DataPreProcessing.py`** | Polars, Prefect, Pydantic | Renombrado, tipado, manejo de nulos, imputación inteligente |
+| Module                     | Technologies               | Features                                             |
+|----------------------------|---------------------------|--------------------------------------------------------|
+| **DataPreProcessing.py** | Polars, Prefect, Pydantic | Renaming, typing, null handling, intelligent imputation |
 
-### ⚙️ **04 - Configuración y Validación**
+### ⚙️ **04 - Configuration and Validation**
 
-| Módulo                                 | Tecnologías          | Funcionalidades                                 |
+| Module                                 | Technologies          | Features                                 |
 |----------------------------------------|----------------------|-------------------------------------------------|
-| **`ReadFile.py`** `ValidatorConfig.py` | Pydantic, YAML, TOML | Validación de configuraciones, schemas de datos |
+| **ReadFile.py** **ValidatorConfig.py** | Pydantic, YAML, TOML | Configuration validation, data schemas |
 
-### 🎯 **05 - Estrategias y Patrones**
+### 🎯 **05 - Strategies and Patterns**
 
-| Módulo              | Tecnologías | Funcionalidades                                        |
+| Module              | Technologies | Functionalities                                        |
 |---------------------|-------------|--------------------------------------------------------|
-| **`Strategies.py`** | Enum        | Estrategias de imputación, tipos de datos, operaciones |
+| **Strategies.py** | Enum        | Imputation strategies, data types, operations |
 
-## 🎯 Características Principales
+## 🎯 Key Features
 
-### 🧠 **Gestión Inteligente de Memoria**
+### 🧠 **Intelligent Memory Management**
 
 ```python
 def decision_frame(self) -> str: 
-    tamaño_archivo = self.archivo.stat().st_size
-    memoria_disponible = psutil.virtual_memory().available
+    file_size = self.file.stat().st_size
+    available_memory = psutil.virtual_memory().available
     
-    # Decisión automática Eager vs Lazy basada en recursos
-    if tamaño_archivo < memoria_disponible * 0.1: 
+    # Automatic Eager vs Lazy decision based on resources
+    if file_size < available_memory * 0.1: 
         return 'eager'
-    elif tamaño_archivo < memoria_disponible * 0.75: 
+    elif file_size < available_memory * 0.75: 
         return 'lazy'
 ```
 
-### 🔧 **Manejo Avanzado de Valores Nulos**
+### 🔧 **Advanced Null Value Handling**
 
 ```python 
-def pipeline_null_handler(self, columnas_representativas: List[str]) -> pl.LazyFrame:
-    # Análisis jerárquico de nulos por columnas representativas
-    frame_nuevo = AnalysisNullData(
+def pipeline_null_handler(self, representative_columns: List[str]) -> pl.LazyFrame:
+    # Hierarchical analysis of nulls by representative columns
+    new_frame = AnalysisNullData(
         frame=frame, 
         model=self.model, 
-        columnas_representativas=columnas_representativas, 
-        columnas_target=self.analyse_null
+        representative_columns=representative_columns, 
+        target_columns=self.analyse_null
     )
-    return frame_nuevo.analysis_null_data()
+    return new_frame.analysis_null_data()
 ```
 
-### 📊 **Análisis Exploratorio Automatizado**
+### 📊 **Automated Exploratory Analysis**
 
 ```python 
-def EDA_Basico(self) -> None: 
-    self.primera_vista()        # Primeras 10 filas
-    self.info_general()         # Metadatos del dataset
-    self.estadistica_general()  # Estadísticas descriptivas
-    self.valores_nulos()        # Análisis de valores missing
+def BasicEDA(self) -> None: 
+    self.first_view()        # First 10 rows
+    self.general_info()         # Dataset metadata
+    self.general_statistics()  # Descriptive statistics
+    self.missing_values()        # Analysis of missing values
 ```
 
-## 🚀 Ejemplos de Implementación
+## 🚀 Implementation Examples
 
-### 🔍 **Análisis Exploratorio Rápido**
+### 🔍 **Quick Exploratory Analysis**
 
 ```python 
-# Análisis completo con una línea
+# Complete analysis with one line
 eda = EDAGeneral(frame=df_lazy)
 eda.EDA_Basico()
 
-# Output automático:
-# - Primeras 10 filas
-# - Shape y tipos de datos
-# - Estadísticas descriptivas
-# - Análisis de valores nulos
+# Automatic output:
+# - First 10 rows
+# - Shape and data types
+# - Descriptive statistics
+# - Null value analysis
 ```
 
-### 🧹 **Pipeline Completo de Limpieza**
+### 🧹 **Complete Cleaning Pipeline**
 
 ```python 
-# Pipeline automatizado con Prefect
+# Automated pipeline with Prefect
 cleaning_pipeline = DataCleaning(frame=df, model=config_model)
 
-df_limpio = cleaning_pipeline.pipeline_data_cleaning(
-    columas_representativas=['categoria', 'grupo'],
-    umbral=0.4,
-    min_proportion=45
-)
+df_clean = cleaning_pipeline.pipeline_data_cleaning(
+    representative_columns=['category', 'group'],
+    threshold=0.4,
+    min_proportion=45)
+
 ```
 
-### ⚡ **Configuración con Validación**
+### ⚡ **Configuration with Validation**
 
 ```yaml
 Paths: 
-  input_file: "datos.csv"
-  output_file: "datos_limpios.parquet"
+  input_file: "data.csv"
+  output_file: "clean_data.parquet"
 
 Cleaning_Rules: 
   column_rename: {'Name':'name', 'Platform':'platform'}
@@ -129,9 +129,9 @@ Cleaning_Rules:
     null_imput_cat_operation: 'mode'
 ```
 
-## 📦 Instalación y Uso
+## 📦 Installation and Use
 
-### **Requisitos**
+### **Requirements**
 
 ```bash 
 # requirements.txt
@@ -143,17 +143,17 @@ tomli>=2.0.0
 psutil>=5.9.0
 ```
 
-### **Uso Rápido**
+### **Quick Use**
 
 ```bash 
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/sm7ss/data-cleaning-pipeline.git
 cd data-cleaning-pipeline
 
-# Instalar dependencias
+# Install dependencies
 pip install -r requirements.txt
 
-# Ejecutar limpieza completa
+# Run full cleaning
 python -c "
 from ReadFile import ReadConfig
 from GetFrame import FrameCollector
@@ -162,70 +162,70 @@ from DataPreProcessing import DataCleaning
 config = ReadConfig('config.yaml').read_config()
 frame = FrameCollector(model=config).get_frame()
 cleaning = DataCleaning(frame=frame, model=config)
-resultado = cleaning.pipeline_data_cleaning(['categoria'])
-print('Limpieza completada!')
+result = cleaning.pipeline_data_cleaning(['category'])
+print('Cleaning complete!')
 "
 ```
 
-## 🛠 Arquitectura y Tecnologías
+## 🛠 Architecture and Technologies
 
-| Tecnología     | Versión | Propósito                         |
+| Technology     | Version | Purpose                         |
 |----------------|---------|-----------------------------------|
-| **Polars**	 | 0.19+   | Procesamiento rápido de datos     |
-| **Prefect**	 | 2.0+	   | Orchestration de pipelines        |
-| **Pydantic**	 | 2.0+	   | Validación de configuraciones     |
-| **Psutil**	 | 5.9+	   | Monitoreo de recursos del sistema |
-| **Python**	 | 3.8+	   | Lenguaje base con type hints      |
+| **Polars**     | 0.19+   | Fast data processing     |
+| **Prefect**     | 2.0+       | Pipeline orchestration        |
+| **Pydantic**     | 2.0+       | Configuration validation     |
+| **Psutil**     | 5.9+       | System resource monitoring |
+| **Python**     | 3.8+       | Base language with type hints      |
 
-## 🔍 Características Avanzadas
+## 🔍 Advanced Features
 
-### **1. Análisis Inteligente de Nulos**
+### **1. Intelligent Null Analysis**
 
-- Detección automática de patrones de missing values
-- Imputación estratégica basada en columnas representativas
-- Umbrales configurables para eliminación vs imputación
-- Análisis jerárquico por grupos de datos
+- Automatic detection of missing value patterns
+- Strategic imputation based on representative columns
+- Configurable thresholds for deletion vs. imputation
+- Hierarchical analysis by data groups
 
-### **2. Optimización de Rendimiento**
+### **2. Performance Optimization**
 
-- Decisión automática Eager vs Lazy
-- Gestión de memoria basada en recursos del sistema
-- Procesamiento por lotes para datasets grandes
-- Streaming processing para optimización
+- Automatic Eager vs. Lazy decision
+- Memory management based on system resources
+- Batch processing for large datasets
+- Streaming processing for optimization
 
-### **3. Validación Robusta**
+### **3. Robust Validation**
 
-- Schemas de datos con Pydantic
-- Validación de configuraciones YAML/TOML
-- Verificación de columnas y tipos de datos
-- Manejo de errores profesional con logging
+- Data schemas with Pydantic
+- YAML/TOML configuration validation
+- Column and data type verification
+- Professional error handling with logging
 
-## 📈 Casos de Uso Implementados
+## 📈 Implemented Use Cases
 
-### 🧹 **Limpieza de Datos de Juegos**
+### 🧹 **Game Data Cleaning**
 
-- Normalización de nombres de columnas
-- Tipado correcto de datos numéricos y categóricos
-- Manejo de valores especiales (TBD, N/A, nan)
-- Imputación inteligente de scores y ratings
+- Column name normalization
+- Correct typing of numerical and categorical data
+- Handling of special values (TBD, N/A, nan)
+- Intelligent imputation of scores and ratings
 
-### 📊 **Preparación para Análisis**
+### 📊 **Preparation for Analysis**
 
-- EDA automatizado para understanding rápido
-- Preparación de datos para machine learning
-- Limpieza para dashboards y visualizaciones
-- Data quality checks automatizados
+- Automated EDA for quick understanding
+- Data preparation for machine learning
+- Cleaning for dashboards and visualizations
+- Automated data quality checks
 
-### ⚡ **Procesamiento de Datos Grandes**
+### ⚡ **Big Data Processing**
 
-- Optimización de memoria para datasets grandes
-- Processing distribuido-ready architecture
-- Batch processing para eficiencia
-- Configuración flexible para diferentes escenarios
+- Memory optimization for large datasets
+- Distributed processing-ready architecture
+- Batch processing for efficiency
+- Flexible configuration for different scenarios
 
-## 🎯 Configuración Ejemplo
+## 🎯 Example Configuration
 
-### **YAML Configuration Completa**
+### **Complete YAML Configuration**
 
 ```yaml 
 Paths: 
@@ -250,18 +250,18 @@ Cleaning_Rules:
     null_imput_cat_operation: 'mode'
 ```
 
-## 🤝 Contribución
+## 🤝 Contribution
 
-¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar el pipeline:
+Contributions are welcome! If you have ideas to improve the pipeline:
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (git checkout -b feature/mejora-limpieza)
-3. Commit tus cambios (git commit -m 'Agregar nueva estrategia de imputación')
-4. Push a la rama (git push origin feature/mejora-limpieza)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a branch for your feature (git checkout -b feature/improve-cleanup)
+3. Commit your changes (git commit -m 'Add new imputation strategy')
+4. Push to the branch (git push origin feature/improve-cleanup)
+5. Open a Pull Request
 
-## 👩‍💻 Sobre Este Pipeline
+## 👩‍💻 About This Pipeline
 
-Este sistema representa un approach profesional a la limpieza de datos, combinando optimización de rendimiento con robustez en la validación. Está diseñado para ser utilizado en entornos production donde la calidad y consistencia de los datos son críticas.
+This system represents a professional approach to data cleaning, combining performance optimization with robust validation. It is designed for use in production environments where data quality and consistency are critical.
 
-**¿Preguntas o sugerencias?** ¡No dudes en abrir un issue!
+**Questions or suggestions?** Feel free to open an issue!
